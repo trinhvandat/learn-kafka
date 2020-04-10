@@ -1,14 +1,18 @@
 package com.spring.kafka.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User {
+@ToString
+@EqualsAndHashCode
+
+
+public class User implements Serializable {
 
     private String name;
     private int age;

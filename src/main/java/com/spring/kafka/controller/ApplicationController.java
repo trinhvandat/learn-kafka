@@ -1,12 +1,11 @@
 package com.spring.kafka.controller;
 
 
+import com.spring.kafka.model.User;
 import com.spring.kafka.producer.KafkaProducer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping(value = "/kafka")
@@ -19,8 +18,8 @@ public class ApplicationController {
         this.producer = producer;
     }
 
-    @PostMapping(value = "/publish")
-    public void sendMessage(@RequestParam("message") String message){
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    public void sendMessage(@RequestBody User message){
         this.producer.sendMessage(message);
     }
 
