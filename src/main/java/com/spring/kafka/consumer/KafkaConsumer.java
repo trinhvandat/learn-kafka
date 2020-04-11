@@ -25,12 +25,6 @@ public class KafkaConsumer {
     UserService userService;
 
 
-//    @KafkaListener(topics = "users", groupId = "group_id", containerFactory = "kafkaListener")
-//    public void consume(User message) throws Exception{
-//        logger.info("Consume message = {}", message);
-//    }
-
-
     @KafkaListener(topics = "users", groupId = "group_id", containerFactory = "kafkaListener")
     public ResponseEntity<?> create(User message){
 

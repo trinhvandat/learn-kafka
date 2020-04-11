@@ -8,14 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class KafkaProducer {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaProducer.class);
 
-    private static final String TOPIC = "users";
 
     /**
      * this code is send message to broken kafka: String
@@ -26,10 +23,9 @@ public class KafkaProducer {
     private KafkaTemplate<String, User> kafkaTemplate;
 
 
-    public void sendMessage(User user){
-        logger.info("send message = {} to topic = {}", user, TOPIC);
-        this.kafkaTemplate.send(TOPIC, user);
+    public void sendMessage(User user, String topic){
+        logger.info("send message = {} to topic = {}", user, topic);
+        this.kafkaTemplate.send(topic, user);
     }
-
 
 }
