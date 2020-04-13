@@ -13,7 +13,7 @@ public interface UserService {
 
     List<User> findAll();
 
-    String deleteById(int userId);
+    User deleteById(int userId);
 
     User findById(int userId);
 

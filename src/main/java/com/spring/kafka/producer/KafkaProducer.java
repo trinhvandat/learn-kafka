@@ -22,10 +22,19 @@ public class KafkaProducer {
     @Autowired
     private KafkaTemplate<String, User> kafkaTemplate;
 
+    @Autowired
+    private KafkaTemplate<String, Integer> kafkaTemplateInteger;
+
 
     public void sendMessage(User user, String topic){
         logger.info("send message = {} to topic = {}", user, topic);
         this.kafkaTemplate.send(topic, user);
+    }
+
+
+    public void sendMessageParam(int userId, String topic){
+        logger.info("send message = {} to topic = {}", userId, topic);
+        this.kafkaTemplateInteger.send(topic, userId);
     }
 
 }

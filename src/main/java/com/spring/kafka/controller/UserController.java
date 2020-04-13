@@ -8,8 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 
 @RestController
@@ -25,24 +28,25 @@ public class UserController {
     UserService userService;
 
     @Value("${kafka.create.topic}")
-    private static String CREATE_TOPIC;
+    private String CREATE_TOPIC;
 
     @Value("${kafka.update.topic}")
-    private static String UPDATE_TOPIC;
+    private String UPDATE_TOPIC;
 
     @Value("${kafka.delete.topic}")
-    private static String DELETE_TOPIC;
+    private String DELETE_TOPIC;
 
 
     @PostMapping(produces = "application/json", consumes = "application/json")
     public void create(@RequestBody User created){
 
+        logger.info("topic = {}", CREATE_TOPIC);
         this.kafkaProducer.sendMessage(created, CREATE_TOPIC);
 
     }
 
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PutMapping(produces = "application/json", consumes = "application/json")
     public void update(@RequestBody User updated){
 
         this.kafkaProducer.sendMessage(updated, UPDATE_TOPIC);
@@ -50,22 +54,20 @@ public class UserController {
     }
 
 
-    @DeleteMapping(value = "/{userId}",produces = "application/json", consumes = "application/json")
-    public String delete(@RequestParam("userId") int userId){
+    @DeleteMapping(value = "/{userId}")
+    public void delete(@PathVariable("userId") int userId){
 
-        User deleted = userService.findById(userId);
-
-        if (deleted != null){
-            this.kafkaProducer.sendMessage(deleted, DELETE_TOPIC);
-            return "send message successful";
-        } else {
-            logger.error("User not found with id = {}", userId);
-            return "User not found";
-        }
+        this.kafkaProducer.sendMessageParam(userId, DELETE_TOPIC);
 
     }
 
 
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<?> getAll(){
 
+        List<User> userList = userService.findAll();
 
+        return new ResponseEntity<>(userList, HttpStatus.OK);
+
+    }
 }

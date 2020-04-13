@@ -45,16 +45,18 @@ public class UserServiceIml implements UserService {
 
 
     @Override
-    public String deleteById(int userId) {
+    public User deleteById(int userId) {
 
         User deleted = findById(userId);
 
         if(deleted != null) {
+
             repository.delete(deleted);
-            return "delete successful";
+            return deleted;
+
         }
 
-        return "User not found!";
+        return null;
 
     }
 
