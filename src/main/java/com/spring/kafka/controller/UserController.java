@@ -38,35 +38,27 @@ public class UserController {
 
 
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public void create(@RequestBody User created){
-
+    public void createNewUser(@RequestBody User created){
         logger.info("topic = {}", CREATE_TOPIC);
         this.kafkaProducer.sendMessage(created, CREATE_TOPIC);
-
     }
 
 
     @PutMapping(produces = "application/json", consumes = "application/json")
-    public void update(@RequestBody User updated){
-
+    public void updateUser(@RequestBody User updated){
         this.kafkaProducer.sendMessage(updated, UPDATE_TOPIC);
-
     }
 
 
     @DeleteMapping(value = "/{userId}")
-    public void delete(@PathVariable("userId") int userId){
-
+    public void deleteUser(@PathVariable("userId") int userId){
         this.kafkaProducer.sendMessageParam(userId, DELETE_TOPIC);
-
     }
 
 
     @GetMapping(produces = "application/json")
-    public ResponseEntity<?> getAll(){
-
-        List<User> userList = userService.findAll();
-
+    public ResponseEntity<?> getAllUser(){
+        List<User> userList = userService.findAllUser();
         return new ResponseEntity<>(userList, HttpStatus.OK);
 
     }

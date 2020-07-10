@@ -26,13 +26,12 @@ public class KafkaConsumer {
     UserService userService;
 
 
-    @KafkaListener(topics = "create_topic", groupId = "group_id", containerFactory = "kafkaListener")
-    public ResponseEntity<?> create(User message){
-
+    @KafkaListener(topics = "${kafka.create.topic}", groupId = "${kafka.groupId}", containerFactory = "kafkaListener")
+    public ResponseEntity<?> createNewUser(User message){
         logger.info("consume message and create User = {}", message);
 
         try{
-            User saved = userService.create(message);
+            User saved = userService.createNewUser(message);
             logger.info("create user = {} successfully", message);
             return new ResponseEntity<>(saved, HttpStatus.OK);
         } catch (NullPointerException ex){
@@ -44,11 +43,10 @@ public class KafkaConsumer {
     }
 
 
-    @KafkaListener(topics = "update_topic", groupId = "group_id", containerFactory = "kafkaListener")
-    public ResponseEntity<?> update(User message){
-
+    @KafkaListener(topics = "${kafka.update.topic}", groupId = "${kafka.groupId}", containerFactory = "kafkaListener")
+    public ResponseEntity<?> updateUser(User message){
         logger.info("consume message and update User = {}",message);
-        User updated = userService.update(message);
+        User updated = userService.updateUser(message);
 
         if(updated != null){
             return new ResponseEntity<>(updated, HttpStatus.OK);
@@ -59,10 +57,10 @@ public class KafkaConsumer {
     }
 
 
-    @KafkaListener(topics = "delete_topic", groupId = "group_id", containerFactory = "integerKafkaListener")
-    public ResponseEntity<?> deleteById(int message){
+    @KafkaListener(topics = "${kafka.delete.topic}", groupId = "${kafka.groupId}", containerFactory = "integerKafkaListener")
+    public ResponseEntity<?> deleteUserById(int message){
 
-        User deleted = userService.deleteById(message);
+        User deleted = userService.deleteUserById(message);
 
         if (deleted != null){
             return new ResponseEntity<>(HttpStatus.OK.getReasonPhrase(), HttpStatus.OK);

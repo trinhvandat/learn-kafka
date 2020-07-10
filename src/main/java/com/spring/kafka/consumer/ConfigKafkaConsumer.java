@@ -28,8 +28,8 @@ public class ConfigKafkaConsumer {
 
         Map<String,Object> config = new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"127.0.0.1:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG,"sample-group");
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"${kafka.bootstrap.server}");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG,"${kafka.groupId}");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonSerializer.class);
 
@@ -55,8 +55,8 @@ public class ConfigKafkaConsumer {
 
         Map<String,Object> config = new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"127.0.0.1:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG,"sample-group");
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,"${kafka.bootstrap.server}");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG,"${kafka.groupId}");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, IntegerSerializer.class);
 

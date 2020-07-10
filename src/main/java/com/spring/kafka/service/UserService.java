@@ -7,14 +7,14 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User create(User created);
+    User createNewUser(User created);
 
-    User update(User updated);
+    User updateUser(User updated);
 
-    List<User> findAll();
+    List<User> findAllUser();
 
-    User deleteById(int userId);
+    User deleteUserById(int userId);
 
-    User findById(int userId);
+    User findUserById(int userId);
 
 }

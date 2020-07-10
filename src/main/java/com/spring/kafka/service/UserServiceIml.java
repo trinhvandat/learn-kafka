@@ -16,20 +16,19 @@ public class UserServiceIml implements UserService {
 
 
     @Override
-    public User create(User created) {
+    public User createNewUser(User created) {
         return repository.save(created);
     }
 
 
     @Override
-    public User update(User updated) {
+    public User updateUser(User updated) {
 
         User checkUser = findById(updated.getId());
 
         if(checkUser != null){
             checkUser.setName(updated.getName());
             checkUser.setAge(updated.getAge());
-
             return repository.saveAndFlush(checkUser);
         }
 
@@ -39,21 +38,19 @@ public class UserServiceIml implements UserService {
 
 
     @Override
-    public List<User> findAll() {
+    public List<User> findAllUser() {
         return repository.findAll();
     }
 
 
     @Override
-    public User deleteById(int userId) {
+    public User deleteUserById(int userId) {
 
         User deleted = findById(userId);
 
         if(deleted != null) {
-
             repository.delete(deleted);
             return deleted;
-
         }
 
         return null;
@@ -62,10 +59,8 @@ public class UserServiceIml implements UserService {
 
 
     @Override
-    public User findById(int userId) {
-
+    public User findUserById(int userId) {
         User user = repository.findById(userId).orElse(null);
-
         return user;
     }
 }
